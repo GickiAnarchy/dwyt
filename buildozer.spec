@@ -7,7 +7,7 @@ title = Down with YouTube
 package.name = dwyt
 
 # (str) Package domain (needed for android/ios packaging)
-package.domain = org.fatest
+package.domain = com.fatest
 
 # (str) Source code where the main.py live
 source.dir = .
@@ -37,7 +37,7 @@ version = 0.1
 
 # (list) Application requirements
 # comma separated e.g. requirements = sqlite3,kivy
-requirements = python3,kivy,pytube
+requirements = python3,kivy,pytube,json
 
 # (str) Custom source folders for requirements
 # Sets custom source for any requirements with recipes
