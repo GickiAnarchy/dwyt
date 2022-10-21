@@ -1,13 +1,13 @@
 [app]
 
 # (str) Title of your application
-title = Down with YouTube
+title = Down with YT
 
 # (str) Package name
-package.name = dwyt
+package.name = dwnwyt
 
 # (str) Package domain (needed for android/ios packaging)
-package.domain = com.fatest
+package.domain = org.test
 
 # (str) Source code where the main.py live
 source.dir = .
@@ -37,7 +37,7 @@ version = 0.1
 
 # (list) Application requirements
 # comma separated e.g. requirements = sqlite3,kivy
-requirements = python3,kivy,pytube,json
+requirements = python3,kivy,pytube
 
 # (str) Custom source folders for requirements
 # Sets custom source for any requirements with recipes
@@ -93,7 +93,7 @@ fullscreen = 0
 #icon.adaptive_background.filename = %(source.dir)s/data/icon_bg.png
 
 # (list) Permissions
-android.permissions = INTERNET
+#android.permissions = INTERNET
 
 # (list) features (adds uses-feature -tags to manifest)
 #android.features = android.hardware.usb.host
@@ -224,6 +224,9 @@ android.permissions = INTERNET
 # (str) XML file to include as an intent filters in <activity> tag
 #android.manifest.intent_filters =
 
+# (list) Copy these files to src/main/res/xml/ (used for example with intent-filters)
+#android.res_xml = PATH_TO_FILE,
+
 # (str) launchMode to set for the main activity
 #android.manifest.launch_mode = standard
 
@@ -329,6 +332,7 @@ android.allow_backup = True
 
 # (str) extra command line arguments to pass when invoking pythonforandroid.toolchain
 #p4a.extra_args =
+
 
 
 #
