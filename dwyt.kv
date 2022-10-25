@@ -67,17 +67,9 @@
 
 
 <MainBox>:
-    #search_in:search_in
+    id:top_one
     orientation:"vertical"
-    #halign:"center"
     size_hint:1.0, 1.0
-    #size:350,500
-    # canvas.before:
-    #     Color:
-    #         rgba: (0.2,0.2,0.4,1)
-    #     Rectangle:
-    #         size:self.size
-    #         pos:self.pos
     YT_Header:
         id:header
         size_hint: 1.0, 0.10
@@ -97,7 +89,7 @@
             Button:
                 id:butt
                 text:"Search"
-                on_press:root.do_it()
+                on_press:top_one.do_it()
                 size_hint:(0.5,0.3)
                 pos_hint:{"center_x":0.75, "center_y": 0.25}
             Button:
