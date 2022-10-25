@@ -1,3 +1,4 @@
+import certifi
 import json
 import os
 import kivy
@@ -20,7 +21,7 @@ from kivy.uix.recycleboxlayout import RecycleBoxLayout
 from kivy.properties import ObjectProperty, StringProperty,ListProperty
 from kivy.logger import Logger
 from kivy.config import Config
-from ayoutube import aYouTube, T7
+#from ayoutube import aYouTube, T7
 os.environ["SSL_CERT_FILE"] = certifi.where()
 
 Config.set('graphics', 'resizable', True)
