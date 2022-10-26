@@ -58,7 +58,6 @@
 
 
 <MainBox>:
-    id:top_one
     orientation:"vertical"
     size_hint:1.0, 1.0
     YT_Header:
@@ -80,7 +79,7 @@
             Button:
                 id:butt
                 text:"Search"
-                on_press:top_one.do_it()
+                on_press:root.do_it()
                 size_hint:(0.5,0.3)
                 pos_hint:{"center_x":0.75, "center_y": 0.25}
             Button:

@@ -98,14 +98,14 @@ class MainBox(BoxLayout):
 
     def do_it(self):
         txt = self.ids.search_in.text
+        self.ids.search_in.text = "TRIED"
         if txt in (None, ""):
             lst = [YouTube(T7)]
             self.ids.yts.add_data(lst)
             return False
-        else:
-            sch = Search(txt)
-            lst = sch.results
-            self.ids.yts.add_data(lst)
+        sch = Search(txt)
+        lst = sch.results
+        self.ids.yts.add_data(lst)
         return True
 
 
