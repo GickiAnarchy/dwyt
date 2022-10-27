@@ -21,7 +21,6 @@ from kivy.uix.recycleboxlayout import RecycleBoxLayout
 from kivy.properties import ObjectProperty, StringProperty,ListProperty
 from kivy.logger import Logger
 from kivy.config import Config
-import ptube
 os.environ["SSL_CERT_FILE"] = certifi.where()
 
 Config.set('graphics', 'resizable', True)
@@ -59,7 +58,9 @@ class YT_Widget(BoxLayout):
 
     def get_yt(self):
         if self.url != None:
-            return ptube.Get_YT(self.url)
+            yt = YouTube(self.url)
+            ayt = aYouTube(yt)
+            return ayt
 
     def dl_this(self):
         if self.check_exists():
@@ -87,30 +88,25 @@ class Ask(Popup):
 class YT_List(RecycleView):
     yt_data = ListProperty()
 
-    # def add_data(self, new_data):
-    #     self.yt_data = [{"title":i.title, "author":i.author,"url":i.watch_url,
-    #                      "length":str(format(i.length / 60, ".2f"))} for i in new_data]
-
     def add_data(self, new_data):
-        self.yt_data = [{"title":t, "author":a,"url":u,
-                         "length":str(format(i.length / 60, ".2f"))} for t,a,u in new_data]
+        self.yt_data = [{"title":i.title, "author":i.author,"url":i.watch_url,
+                         "length":str(format(i.length / 60, ".2f"))} for i in new_data]
+
+
 ##    ##    ##    ##    ##    ##    ##    ##    ##    ##    ##    ##
 class MainBox(BoxLayout):
 
     def do_it(self):
         txt = self.ids.search_in.text
-        res = ptube.Do_Search(txt)
-        self.ids.yts.add_data(res)
-        # txt = self.ids.search_in.text
-        # self.ids.search_in.text = "TRIED"
-        # if txt in (None, ""):
-        #     lst = [YouTube(T7)]
-        #     self.ids.yts.add_data(lst)
-        #     return False
-        # sch = Search(txt)
-        # lst = sch.results
-        # self.ids.yts.add_data(lst)
-        # return True
+        self.ids.search_in.text = "TRIED"
+        if txt in (None, ""):
+            lst = [YouTube(T7)]
+            self.ids.yts.add_data(lst)
+            return False
+        sch = Search(txt)
+        lst = sch.results
+        self.ids.yts.add_data(lst)
+        return True
 
 
 ##    ##    ##    ##    ##    ##    ##    ##    ##    ##    ##    ##
