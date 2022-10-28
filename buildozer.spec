@@ -1,6 +1,6 @@
 [app]
 
-# (str) Title of your application
+# (str) Title of your application gggjjffjf
 title = Down with YT
 
 # (str) Package name
