@@ -1,5 +1,5 @@
 [app]
-7
+
 # (str) Title of your application
 title = Down with YT
 
