@@ -92,7 +92,7 @@ class YT_List(RecycleView):
     #                      "length":str(format(i.length / 60, ".2f"))} for i in new_data]
 
     def add_data(self, new_data):
-        self.yt_data = [{"title":t, "author":a,"url":u} for t,a,u in new_data]
+        self.yt_data = [{"title":t, "author":a, "url":u} for t,a,u in new_data]
 
 ##    ##    ##    ##    ##    ##    ##    ##    ##    ##    ##    ##
 class MainBox(BoxLayout):
