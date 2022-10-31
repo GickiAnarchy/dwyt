@@ -37,7 +37,7 @@ version = 0.1
 
 # (list) Application requirements
 # comma separated e.g. requirements = sqlite3,kivy
-requirements = python3,kivy==2.1.0,kivymd,charset-normalizer,idna,pytube==11.0.1,hurry.filesize,pygments,sdl2_ttf==2.0.15,pillow,requests,urllib3,jnius,android,kivymd==1.1.1,sdl2_ttf==2.0.15
+requirements = python3,kivy,kivymd,charset-normalizer,idna,pytube,hurry.filesize,pygments,sdl2_ttf==2.0.15,Pillow,requests,urllib3,jnius,android
 
 
 # (str) Custom source folders for requirements
@@ -94,8 +94,7 @@ fullscreen = 0
 #icon.adaptive_background.filename = %(source.dir)s/data/icon_bg.png
 
 # (list) Permissions
-android.permissions = INTERNET,READ_EXTERNAL_STORAGE ,WRITE_EXTERNAL_STORAGE
-
+android.permissions = INTERNET,READ_EXTERNAL_STORAGE,WRITE_EXTERNAL_STORAGE
 
 # (list) features (adds uses-feature -tags to manifest)
 #android.features = android.hardware.usb.host
@@ -136,7 +135,7 @@ android.permissions = INTERNET,READ_EXTERNAL_STORAGE ,WRITE_EXTERNAL_STORAGE
 # agreements. This is intended for automation only. If set to False,
 # the default, you will be shown the license when first running
 # buildozer.
-# android.accept_sdk_license = False
+android.accept_sdk_license = True
 
 # (str) Android entry point, default is ok for Kivy-based app
 #android.entrypoint = org.kivy.android.PythonActivity

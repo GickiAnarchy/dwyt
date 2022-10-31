@@ -1,0 +1,80 @@
+Kivy-Garden>=0.1.4
+docutils
+pygments
+
+[:sys_platform == "win32"]
+kivy_deps.angle~=0.3.0
+kivy_deps.sdl2~=0.3.1
+kivy_deps.glew~=0.3.0
+pypiwin32
+
+[angle]
+kivy_deps.angle~=0.3.0
+sys_platform=="win32"
+
+[base]
+pillow
+docutils
+pygments
+
+[base:sys_platform == "win32"]
+kivy_deps.angle~=0.3.0
+kivy_deps.sdl2~=0.3.1
+kivy_deps.glew~=0.3.0
+pypiwin32
+
+[dev]
+pytest>=3.6
+pytest-cov
+pytest_asyncio!=0.11.0
+pytest-timeout
+pyinstaller
+sphinx
+sphinxcontrib-blockdiag
+sphinxcontrib-seqdiag
+sphinxcontrib-actdiag
+sphinxcontrib-nwdiag
+flake8
+
+[dev:sys_platform == "win32"]
+kivy_deps.gstreamer_dev~=0.3.1
+kivy_deps.sdl2_dev~=0.3.1
+kivy_deps.glew_dev~=0.3.0
+
+[full]
+pillow
+docutils
+pygments
+
+[full:sys_platform == "linux" or sys_platform == "darwin"]
+ffpyplayer
+
+[full:sys_platform == "win32"]
+kivy_deps.gstreamer~=0.3.1
+kivy_deps.angle~=0.3.0
+kivy_deps.sdl2~=0.3.1
+kivy_deps.glew~=0.3.0
+pypiwin32
+
+[glew]
+kivy_deps.glew~=0.3.0
+sys_platform=="win32"
+
+[gstreamer]
+kivy_deps.gstreamer~=0.3.1
+sys_platform=="win32"
+
+[media]
+
+[media:sys_platform == "linux" or sys_platform == "darwin"]
+ffpyplayer
+
+[media:sys_platform == "win32"]
+kivy_deps.gstreamer~=0.3.1
+
+[sdl2]
+kivy_deps.sdl2~=0.3.1
+sys_platform=="win32"
+
+[tuio]
+oscpy
