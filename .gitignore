@@ -212,6 +212,8 @@ dmypy.json
 
 .buildozer/
 
+bin/
+
 # Other
 
 *.mp3
