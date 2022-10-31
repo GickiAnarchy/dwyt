@@ -208,12 +208,11 @@ dmypy.json
 
 .pyre/
 
-#FA
+# buildozer and p4a
 
-*.fa
+.buildozer/
 
-
-.buildozer
+# Other
 
 *.mp3
 
