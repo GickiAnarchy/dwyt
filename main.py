@@ -19,10 +19,13 @@ from kivy.uix.popup import Popup
 from kivy.uix.recycleview import RecycleView
 from kivy.uix.recycleboxlayout import RecycleBoxLayout
 from kivy.properties import ObjectProperty, StringProperty,ListProperty
+
 from kivy.logger import Logger
 from kivy.config import Config
 import ptube
+ca_file=certifi.where()
 os.environ["SSL_CERT_FILE"] = certifi.where()
+
 
 Config.set('graphics', 'resizable', True)
 
