@@ -1,3 +1,5 @@
+#!/usr/bin/dwyt
+
 import os
 from pytube import YouTube, Search
 

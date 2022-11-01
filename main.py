@@ -1,6 +1,10 @@
+#!/usr/bin/dwyt
+
 import certifi
 import json
 import os
+import certifi
+import requests
 import kivy
 import pytube
 from pytube import YouTube, Search
@@ -19,11 +23,11 @@ from kivy.uix.popup import Popup
 from kivy.uix.recycleview import RecycleView
 from kivy.uix.recycleboxlayout import RecycleBoxLayout
 from kivy.properties import ObjectProperty, StringProperty,ListProperty
-
+from kivy.utils import platform
 from kivy.logger import Logger
 from kivy.config import Config
 import ptube
-ca_file=certifi.where()
+from ssltest import TestApp
 os.environ["SSL_CERT_FILE"] = certifi.where()
 
 
@@ -433,5 +437,9 @@ def presetup():
 
 ##    ##    ##    ##    ##    ##    ##    ##    ##    ##    ##    ##
 if __name__ == "__main__":
-    presetup()
-    DWYTApp().run()
+    try:
+        TestApp().test_requests()
+        TestApp().test_urllib()
+    finally:
+        presetup()
+        DWYTApp().run()
