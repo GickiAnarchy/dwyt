@@ -1,4 +1,3 @@
-#!/usr/bin/dwyt
 
 import os
 import ssl

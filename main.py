@@ -1,4 +1,3 @@
-#!/usr/bin/dwyt
 
 import certifi
 import json
