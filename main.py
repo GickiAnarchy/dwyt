@@ -55,7 +55,6 @@ class YT_Widget(BoxLayout):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         Logger.info("USE: YT_Widget")
-        self.p
         self.title = "title"
         self.author = "channel"
         self.length = "0"

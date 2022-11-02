@@ -69,12 +69,12 @@
         pos_hint: {"center_x":0.5}
     BoxLayout:
         size_hint: 1.0, 0.15
-        padding: 5,5
+        padding: 10,10
         spacing: 5
         TextInput:
             id:search_in
-            size_hint:(1.0,0.5)
-            pos_hint:{"center_x": 0.25, "center_y": 0.5}
+            size_hint:(0.8,0.5)
+            pos_hint:{"center_x": 0.5, "center_y": 0.5}
             multiline:False
         BoxLayout:
             orientation:"vertical"
@@ -84,13 +84,13 @@
                 text:"Search"
                 on_press:root.do_it()
                 size_hint:(0.75,0.3)
-                pos_hint:{"center_x":0.75, "center_y": 0.25}
+                pos_hint:{"center_x":0.5, "center_y": 0.25}
             Button:
                 id:exit_btn
                 text:"Exit"
                 on_press:app.stop()
                 size_hint:(0.75,0.3)
-                pos_hint:{"center_x":0.75, "center_y": 0.75}
+                pos_hint:{"center_x":0.5, "center_y": 0.75}
     YT_List:
         id:yts
         size_hint: 1.0, 0.75
