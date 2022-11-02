@@ -28,8 +28,6 @@ from kivy.logger import Logger
 from kivy.config import Config
 import ptube
 from ssltest import TestApp
-os.environ["SSL_CERT_FILE"] = certifi.where()
-
 
 Config.set('graphics', 'resizable', True)
 
@@ -57,6 +55,7 @@ class YT_Widget(BoxLayout):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         Logger.info("USE: YT_Widget")
+        self.p
         self.title = "title"
         self.author = "channel"
         self.length = "0"
@@ -69,13 +68,15 @@ class YT_Widget(BoxLayout):
             return ptube.Get_YT(self.url)
 
     def dl_this(self):
+        Logger.info("attempting download")
         if self.check_exists():
             self.ids.yt_btn.disabled = True
             return False
-        obj = self.get_yt()
+        obj = aYouTube(self.get_yt())
         if self.check_exists():
             self.yt_btn.disabled = True
             return False
+        Logger.info("downloaded")
         obj.download_audio()
 
     def check_exists(self):
@@ -235,6 +236,7 @@ class aYouTube():
         base, ext = os.path.splitext(out_file)
         new_file = base + ".mp4"
         os.rename(out_file, new_file)
+        Logger.info(f"{new_file}")
         return True
 
 
@@ -250,6 +252,7 @@ class aYouTube():
         base, ext = os.path.splitext(out_file)
         new_file = base + ".mp3"
         os.rename(out_file, new_file)
+        Logger.info(f"{new_file}")
         return True
 
 
@@ -440,6 +443,7 @@ if __name__ == "__main__":
     try:
         TestApp().test_requests()
         TestApp().test_urllib()
-    finally:
-        presetup()
-        DWYTApp().run()
+    except:
+        Logger.info("except in namemain")
+    presetup()
+    DWYTApp().run()
