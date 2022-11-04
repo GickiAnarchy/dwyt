@@ -1,4 +1,7 @@
 
+__version__ = “0.0.1”
+
+
 import certifi
 import json
 import os
