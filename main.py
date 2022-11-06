@@ -1,7 +1,3 @@
-
-__version__ = “0.0.1”
-
-
 import certifi
 import json
 import os
@@ -31,8 +27,13 @@ from kivy.config import Config
 import ptube
 from ssltest import TestApp
 
+# Version for apk building
+__version__ = "0.1"
+
+#kivy settings
 Config.set('graphics', 'resizable', True)
 
+#defining path for downloads folder
 dl_dir = os.path.join(os.path.dirname(__file__), "Downloads")
 
 
@@ -56,7 +57,7 @@ class YT_Widget(BoxLayout):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        Logger.info("USE: YT_Widget")
+        Logger.info("USE: YT_Widge")
         self.title = "title"
         self.author = "channel"
         self.length = "0"
