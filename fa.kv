@@ -1,0 +1,35 @@
+<Front_Screen>:
+    GridLayout:
+        cols:2
+        spacing:10
+        Button:
+            text:"Search"
+            on_press:root.manager.current='search_screen'
+        Button:
+            text:"About"
+            on_press:root.manager.current='about_screen'
+
+
+# <Search_Screen>:
+
+
+# <About_Screen>:
+
+
+<Fa_Window>:
+    orientation:'vertical'
+    size_hint:None,None
+    size:300,600
+    AnchorLayout:
+        anchor_y:"top"
+        padding:10,10f
+        size_hint:0.50,0.5
+        Button:
+            text:"Home"
+            on_press:pmaster.to_home()
+            size_hint:None,None
+            size:30,50
+            pos_hint:{'center_x':0.5,'center_y':0.5}
+    Page_Master:
+        id:pmaster
+        size_hint:0.90,1.0
