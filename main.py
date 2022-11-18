@@ -23,6 +23,7 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.anchorlayout import AnchorLayout
 from kivy.uix.relativelayout import RelativeLayout
 from kivy.uix.stacklayout import StackLayout
+from kivy.uix.popup import Popup
 #   Screens and Pages
 from kivy.uix.screenmanager import Screen,ScreenManager,RiseInTransition
 #   User Interactive Widgets
@@ -59,9 +60,16 @@ class Search_Screen(Screen):
     pass
 
 class About_Screen(Screen):
-    pass
+    def __init__(self, **kwargs):
+        super(About_Screen, self).__init__(**kwargs)
+        self.popup = Popup(title = "ABOUT", content=Label(text="Made by:\nGickiAnarchy"), size_hint=(0.6,0.6))
 
-class  Video_Info(BoxLayout):
+    def on_enter(self):
+        super(About_Screen, self).on_enter()
+        self.popup.open()
+        self.manager.current='front_screen'
+
+class Video_Info(BoxLayout):
     vtitle = ObjectProperty(None)
     vauthor = ObjectProperty(None)
     vlength = ObjectProperty(None)
