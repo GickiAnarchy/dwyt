@@ -3,6 +3,8 @@
 import os
 import datetime
 
+from pytube import YouTube
+
 """ KIVY IMPORTS """
 #   Main App
 from kivy.app import App
@@ -59,6 +61,23 @@ class Search_Screen(Screen):
 class About_Screen(Screen):
     pass
 
+class  Video_Info(BoxLayout):
+    vtitle = ObjectProperty(None)
+    vauthor = ObjectProperty(None)
+    vlength = ObjectProperty(None)
+    vdesc =  ObjectProperty(None)
+
+    def add_data(self, yt = None):
+        if yt is None:
+            yt = YouTube("https://youtu.be/R44K3tUFh60")
+        if not isinstance(yt, YouTube):
+            Logger.warning(f"{yt} isn't a YouTube object.")
+            return False
+        self.vtitle.text = yt.title
+        self.vauthor.text = yt.author
+        self.vlength.text = str(format(yt.length/60, '02f'))
+        self.vdesc.text = yt.description
+        self.yt = yt
 
 class Page_Master(ScreenManager):
     def __init__(self, **kwargs):
@@ -68,8 +87,8 @@ class Page_Master(ScreenManager):
         self.add_widget(Search_Screen(name='search_screen'))
         self.add_widget(About_Screen(name='about_screen'))
 
-    def to_home(self, obj):
-        self.current_screen='front_screen'
+    def to_home(self):
+        self.current='front_screen'
 
 
 class Fa_Window(BoxLayout):

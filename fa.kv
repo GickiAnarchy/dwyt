@@ -10,10 +10,53 @@
             on_press:root.manager.current='about_screen'
 
 
-# <Search_Screen>:
+<Search_Screen>:
+    BoxLayout:
+        orientation:'vertical'
+        TextInput:
+            id:search_in
+        Button:
+            id:search_btn
+            text:"Search"
+            on_press:info.add_data()
+        Video_Info:
+            id:info
 
 
 # <About_Screen>:
+
+
+<Video_Info>:
+    vtitle:vtitle
+    vauthor:vauthor
+    vlength:vlength
+    vdesc:vdesc
+    orientation:'horizontal'
+    size_hint:1.0, 0.30
+    padding:5,5
+    GridLayout:
+        cols:3
+        size_hint_x:0.80
+        anchor_x:'x'
+        Label:
+            id:vtitle
+            text:""
+        Label:
+            id:vauthor
+            text:""
+        Label:
+            id:vlength
+            text:""
+        Label:
+            id:vdesc
+            text:""
+    Button:
+        id:dl_btn
+        text:""
+        size_hint:0.2,0.2
+        pos_hint:{'center_x':0.90,'center_y':0.5}
+
+
 
 
 <Fa_Window>:
@@ -22,7 +65,7 @@
     size:300,600
     AnchorLayout:
         anchor_y:"top"
-        padding:10,10f
+        padding:10,10
         size_hint:0.50,0.5
         Button:
             text:"Home"
