@@ -1,21 +1,19 @@
-#!etc/bin/python3.10
+""" Down With YouTube :: Main.py || email: fatheranarchy@programmer.net """
 
 import os
-import datetime
 
+''' PyTube '''
 from pytube import YouTube
 
-""" KIVY IMPORTS """
-#   Main App
+''' Kivy '''
+#   App
 from kivy.app import App
 #   Base Window
-from kivy.core.window import Window, WindowBase
-#   Base Widget
-from kivy.uix.widget import Widget
+from kivy.core.window import Window, WindowBase, EventLoop
 #   Clock
 from kivy.clock import Clock
 #   Canvas
-from kivy.graphics import Canvas, Color, Rectangle
+from kivy.graphics import Canvas, Color, Rectangle, Ellipse
 #   Layouts
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.floatlayout import FloatLayout
@@ -25,75 +23,111 @@ from kivy.uix.relativelayout import RelativeLayout
 from kivy.uix.stacklayout import StackLayout
 from kivy.uix.popup import Popup
 #   Screens and Pages
-from kivy.uix.screenmanager import Screen,ScreenManager,RiseInTransition
+from kivy.uix.screenmanager import Screen,ScreenManager,RiseInTransition,ShaderTransition
+#   Base Widget
+from kivy.uix.widget import Widget
 #   User Interactive Widgets
 from kivy.uix.label import Label
 from kivy.uix.button import Button
 from kivy.uix.textinput import TextInput
 from kivy.uix.image import Image, AsyncImage
-from kivy.uix.scrollview import ScrollView
 from kivy.uix.recycleview import RecycleView
 from kivy.uix.recycleboxlayout import RecycleBoxLayout
 #   Properties
 from kivy.properties import ObjectProperty, StringProperty, ListProperty, BooleanProperty, NumericProperty
 #   Misc Kivy
 from kivy.logger import Logger
-from kivy.base import EventLoop
 from kivy.config import Config
 
-''' KivyMD '''
-# import kivymd
-# from kivymd.app import MDApp
-# from kivymd.uix.screen import Screen, MDScreen
-# from kivymd.uix.label import MDLabel
-# from kivymd.uix.button import MDTextButton
-# from kivymd.uix.button import MDRectangleFlatButton
-# from kivymd.uix.list import MDList
-# from kivymd.uix.card import MDCard
-# from kivymd.uix.textfield import MDTextField
+Config.set("graphics","resizable", True)
+EventLoop.ensure_window()
+window = EventLoop.window
+
+
+
+DOWNLOADS="Downloads/"
+if not os.path.exists(DOWNLOADS):
+    os.mkdir(DOWNLOADS)
 
 
 class Front_Screen(Screen):
-    pass
+    def do_popup(self):
+        self.popup = Popup(title="ABOUT", content=Label(text="Made by:\nGickiAnarchy\nEmail:fatheranarchy@programmer.net"), size_hint=(0.6, 0.6))
+        self.popup.open()
+
 
 class Search_Screen(Screen):
     pass
 
-class About_Screen(Screen):
+
+class Download_Screen(Screen):
+    dl_input = ObjectProperty(None)
+
     def __init__(self, **kwargs):
-        super(About_Screen, self).__init__(**kwargs)
-        self.popup = Popup(title = "ABOUT", content=Label(text="Made by:\nGickiAnarchy"), size_hint=(0.6,0.6))
+        super(Download_Screen, self).__init__(**kwargs)
+        self.dl_input = self.ids['dl_input']
 
-    def on_enter(self):
-        super(About_Screen, self).on_enter()
-        self.popup.open()
-        self.manager.current='front_screen'
-
-class Video_Info(BoxLayout):
-    vtitle = ObjectProperty(None)
-    vauthor = ObjectProperty(None)
-    vlength = ObjectProperty(None)
-    vdesc =  ObjectProperty(None)
-
-    def add_data(self, yt = None):
-        if yt is None:
-            yt = YouTube("https://youtu.be/R44K3tUFh60")
-        if not isinstance(yt, YouTube):
-            Logger.warning(f"{yt} isn't a YouTube object.")
+    def download(self,format = ""):
+        url = self.dl_input.text
+        try:
+            y = YouTube(url)
+            self.pop = Popup(title="Download", content=Label(f"{y.title}\nPosted By:\n{y.author}"))
+            self.pop.open()
+        except:
+            Logger.error("Not a valid YouTube link")
+        if format == "V":
+            self.get_video(url)
+            return True
+        if format == "A":
+            self.get_audio(url)
+            return True
+        if format in (None, ""):
+            Logger.warning("Input shouldn't be empty")
             return False
-        self.vtitle.text = yt.title
-        self.vauthor.text = yt.author
-        self.vlength.text = str(format(yt.length/60, '02f'))
-        self.vdesc.text = yt.description
-        self.yt = yt
+
+    def get_audio(self, link):
+        try:
+            yt = YouTube(link)
+        except:
+            Logger.exception("YouTube link is invalid")
+            return False
+        audio = yt.streams.get_audio_only()
+        destination = f"{DOWNLOADS}/Audio"
+        try:
+            out_file = audio.download(output_path=destination)
+        except:
+            err_link = f"::ERROR::\n{link}"
+            Logger.error(err_link)
+            return False
+        base, ext = os.path.splitext(out_file)
+        new_file = base + '.mp3'
+        os.rename(out_file, new_file)
+
+    def get_video(self, link):
+        try:
+            yt = YouTube(link)
+        except:
+            Logger.exception("YouTube link is invalid")
+            return False
+        video = yt.streams.first()
+        destination = f"{DOWNLOADS}/Video"
+        try:
+            out_file = video.download(output_path=destination)
+        except:
+            Logger.error(f"::ERROR::\n{link}")
+            return False
+        base, ext = os.path.splitext(out_file)
+        new_file = base + '.mp4'
+        os.rename(out_file, new_file)
+
 
 class Page_Master(ScreenManager):
     def __init__(self, **kwargs):
         super(Page_Master, self).__init__(**kwargs)
-        self.transition=RiseInTransition()
+        self.transition=ShaderTransition()
         self.add_widget(Front_Screen(name='front_screen'))
         self.add_widget(Search_Screen(name='search_screen'))
-        self.add_widget(About_Screen(name='about_screen'))
+        self.add_widget(Download_Screen(name='download_screen'))
 
     def to_home(self):
         self.current='front_screen'
@@ -101,12 +135,20 @@ class Page_Master(ScreenManager):
 
 class Fa_Window(BoxLayout):
     pmaster=ObjectProperty(None)
+    def __init__(self, **kwargs):
+        super(Fa_Window, self).__init__(**kwargs)
+        self.size_hint=(None,None)
+        self.size = window.size
+
 
 class FaApp(App):
     def build(self):
         Logger.info("\n\tstarting FaApp")
         return Fa_Window()
 
+    def on_start(self):
+        super(FaApp, self).on_start()
+        window.size=(300,600)
 
 '''     END OF FILE     '''
 
