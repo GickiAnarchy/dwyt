@@ -68,18 +68,30 @@
         Rectangle:
             size:self.size
             pos:self.pos
+    win:win
     orientation:'vertical'
+    size_hint:None,None
+    size: win.size
     AnchorLayout:
         anchor_y:"top"
         padding:10,10
         size_hint:1.0,0.25
+        pos_hint:{'y':0.75}
         FaButton:
             text:"Home"
             on_press:pmaster.to_home()
             size:60,30
-            pos_hint:{'center_x':0.5,'center_y':0.5}
-    Page_Master:
-        id:pmaster
-        padding: 10,10
+            #pos_hint:{'center_x':0.5,'center_y':0.5}
+    AnchorLayout:
+        anchor_y:'bottom'
         size_hint:0.9,0.75
-        pos_hint:{'x':0.05}
+        Page_Master:
+            id:pmaster
+            padding: 10,10
+            #size_hint:0.9,0.75
+            pos_hint:{'x':0.05}
+
+#<FaApp>:
+#    win:win
+#    size_hint:None,None
+#    size:win.size
