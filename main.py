@@ -43,7 +43,7 @@ Config.set("graphics","resizable", True)
 EventLoop.ensure_window()
 window = EventLoop.window
 
-DOWNLOADS="Downloads/"
+DOWNLOADS = "Downloads/"
 if not os.path.exists(DOWNLOADS):
     os.mkdir(DOWNLOADS)
 
@@ -134,6 +134,7 @@ class Page_Master(ScreenManager):
 class Fa_Window(RelativeLayout):
     pmaster=ObjectProperty(None)
     win = ObjectProperty(None)
+
     def __init__(self, **kwargs):
         super(Fa_Window, self).__init__(**kwargs)
         self.size_hint=(None,None)
@@ -142,14 +143,13 @@ class Fa_Window(RelativeLayout):
 
 
 class FaApp(App):
-
     def build(self):
         Logger.info("\n\tstarting FaApp")
         return Fa_Window()
 
     def on_start(self):
         super(FaApp, self).on_start()
-        #window.size=(300,600)
+
 
 '''     END OF FILE     '''
 
