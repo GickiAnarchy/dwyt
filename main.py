@@ -162,7 +162,7 @@ class FaApp(App):
                 else:
                     Logger.info("Did not accept permissions")
 
-            request_permissions([Permission.WRITE_EXTERNAL_DATA], callback)
+            request_permissions([Permission.WRITE_EXTERNAL_STORAGE], callback)
 
 
 '''     END OF FILE     '''
