@@ -38,9 +38,8 @@ from kivy.properties import ObjectProperty, StringProperty, ListProperty, Boolea
 #   Misc Kivy
 from kivy.logger import Logger
 from kivy.config import Config
-
-#from android.permissions import request_permissions, Permission
-
+#   Kivy Utils
+from kivy.utils import platform
 
 
 Config.set("graphics","resizable", True)
@@ -147,7 +146,6 @@ class Fa_Window(RelativeLayout):
 class FaApp(App):
     win = ObjectProperty(None)
 
-
     def build(self):
         Logger.info("\n\tstarting FaApp")
         return Fa_Window()
@@ -156,6 +154,15 @@ class FaApp(App):
         super(FaApp, self).on_start()
         self.win = window
         self.size = self.win.size
+        if platform == 'android':
+            from android.permissions import request_permissions, Permission
+            def callback(permission, results):
+                if all([res for res in results]):
+                    Logger.info("Got Permissions")
+                else:
+                    Logger.info("Did not accept permissions")
+
+            request_permissions([Permission.WRITE_EXTERNAL_DATA], callback)
 
 
 '''     END OF FILE     '''
