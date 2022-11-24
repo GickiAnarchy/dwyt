@@ -131,24 +131,25 @@ class Page_Master(ScreenManager):
         self.current='front_screen'
 
 
-class Fa_Window(RelativeLayout):
+class Fa_Window(BoxLayout):
     pmaster=ObjectProperty(None)
-    win = ObjectProperty(None)
 
-    def __init__(self, **kwargs):
-        super(Fa_Window, self).__init__(**kwargs)
-        self.size_hint=(None,None)
-        self.size = window.size
-        self.win = window
+    # def __init__(self, **kwargs):
+    #     super(Fa_Window, self).__init__(**kwargs)
+    #     self.size_hint=(None,None)
 
 
 class FaApp(App):
+    win = ObjectProperty(None)
+
     def build(self):
         Logger.info("\n\tstarting FaApp")
         return Fa_Window()
 
     def on_start(self):
         super(FaApp, self).on_start()
+        self.win = window
+        self.size = self.win.size
 
 
 '''     END OF FILE     '''
