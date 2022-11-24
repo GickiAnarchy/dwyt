@@ -39,6 +39,10 @@ from kivy.properties import ObjectProperty, StringProperty, ListProperty, Boolea
 from kivy.logger import Logger
 from kivy.config import Config
 
+#from android.permissions import request_permissions, Permission
+
+
+
 Config.set("graphics","resizable", True)
 EventLoop.ensure_window()
 window = EventLoop.window
