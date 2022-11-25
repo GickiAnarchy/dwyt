@@ -46,9 +46,9 @@ Config.set("graphics","resizable", True)
 EventLoop.ensure_window()
 window = EventLoop.window
 
+#Dowload dir??
 DOWNLOADS = "Downloads/"
-if not os.path.exists(DOWNLOADS):
-    os.mkdir(DOWNLOADS)
+
 
 
 class Front_Screen(Screen):
@@ -159,11 +159,12 @@ class FaApp(App):
             def callback(permission, results):
                 if all([res for res in results]):
                     Logger.info("Got Permissions")
-
                 else:
                     Logger.info("Did not accept permissions")
-
-            request_permissions([Permission.WRITE_EXTERNAL_STORAGE, Permission.INTERNET], callback)
+            request_permissions([Permission.WRITE_EXTERNAL_STORAGE], callback)
+            if not os.path.exists(DOWNLOADS):
+                os.mkdir(f"./{DOWNLOADS}")
+                Logger.info("Permissions accepted")
 
 
 '''     END OF FILE     '''
