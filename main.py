@@ -159,10 +159,11 @@ class FaApp(App):
             def callback(permission, results):
                 if all([res for res in results]):
                     Logger.info("Got Permissions")
+
                 else:
                     Logger.info("Did not accept permissions")
 
-            request_permissions([Permission.WRITE_EXTERNAL_STORAGE], callback)
+            request_permissions([Permission.WRITE_EXTERNAL_STORAGE, Permission.INTERNET], callback)
 
 
 '''     END OF FILE     '''
