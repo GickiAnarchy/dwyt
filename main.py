@@ -46,7 +46,7 @@ Config.set("graphics", "resizable", True)
 EventLoop.ensure_window()
 window = EventLoop.window
 
-# Dowload dir??
+# Download dir??
 DOWNLOADS = "Downloads/"
 
 
@@ -57,21 +57,9 @@ class Front_Screen(Screen):
                            size_hint=(0.6, 0.6))
         self.popup.open()
 
-class Search_Widget(BoxLayout):
-    srch_input = ObjectProperty(None)
-    srch_button = ObjectProperty(None)
-
-    def get_input(self):
-        if self.srch_input.text not in (None, ""):
-            return self.srch_input.text
-
-
 
 class Search_Screen(Screen):
-    def on_enter(self, *args):
-        super(Search_Screen, self).on_enter(*args)
-        # TODO:
-        # self.pop = Popup(title = "Search YT", content = )
+    pass
 
 
 class Search_Item(BoxLayout):
@@ -100,24 +88,23 @@ class Download_Screen(Screen):
     def download(self, format=""):
         url = self.dl_input.text
         with yt_dlp.YoutubeDL() as ytdl:
-            ytdl.dl()
             ytdl.download(url)
             return
-        # try:
-        #     y = YouTube(url)
-        #     self.pop = Popup(title="Download", content=Label(f"{y.title}\nPosted By:\n{y.author}"))
-        #     self.pop.open()
-        # except:
-        #     Logger.error("Not a valid YouTube link")
-        # if format == "V":
-        #     self.get_video(url)
-        #     return True
-        # if format == "A":
-        #     self.get_audio(url)
-        #     return True
-        # if format in (None, ""):
-        #     Logger.warning("Input shouldn't be empty")
-        #     return False
+        try:
+            y = YouTube(url)
+            self.pop = Popup(title="Download", content=Label(f"{y.title}\nPosted By:\n{y.author}"))
+            self.pop.open()
+        except:
+            Logger.error("Not a valid YouTube link")
+        if format == "V":
+            self.get_video(url)
+            return True
+        if format == "A":
+            self.get_audio(url)
+            return True
+        if format in (None, ""):
+            Logger.warning("Input shouldn't be empty")
+            return False
 
     def get_audio(self, link):
         try:
