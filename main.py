@@ -24,7 +24,7 @@ from kivy.uix.relativelayout import RelativeLayout
 from kivy.uix.stacklayout import StackLayout
 from kivy.uix.popup import Popup
 #   Screens and Pages
-from kivy.uix.screenmanager import Screen,ScreenManager,RiseInTransition,ShaderTransition
+from kivy.uix.screenmanager import Screen, ScreenManager, RiseInTransition, ShaderTransition
 #   Base Widget
 from kivy.uix.widget import Widget
 #   User Interactive Widgets
@@ -42,24 +42,32 @@ from kivy.config import Config
 #   Kivy Utils
 from kivy.utils import platform
 
-
-Config.set("graphics","resizable", True)
+Config.set("graphics", "resizable", True)
 EventLoop.ensure_window()
 window = EventLoop.window
 
-#Dowload dir??
+# Dowload dir??
 DOWNLOADS = "Downloads/"
-
 
 
 class Front_Screen(Screen):
     def do_popup(self):
-        self.popup = Popup(title="ABOUT", content=Label(text="Made by:\nGickiAnarchy\nEmail:fatheranarchy@programmer.net"), size_hint=(0.6, 0.6))
+        self.popup = Popup(title="ABOUT",
+                           content=Label(text="Made by:\nGickiAnarchy\nEmail:fatheranarchy@programmer.net"),
+                           size_hint=(0.6, 0.6))
         self.popup.open()
+
+class Search_Widget(BoxLayout):
+    srch_input = ObjectProperty(None)
+    srch_button = ObjectProperty(None)
+
+    def get_input(self):
+        if self.srch_input.text not in (None, ""):
+            return self.srch_input.text
+
 
 
 class Search_Screen(Screen):
-    pass
     def on_enter(self, *args):
         super(Search_Screen, self).on_enter(*args)
         # TODO:
@@ -89,26 +97,27 @@ class Download_Screen(Screen):
         super(Download_Screen, self).__init__(**kwargs)
         self.dl_input = self.ids['dl_input']
 
-    def download(self,format = ""):
+    def download(self, format=""):
         url = self.dl_input.text
         with yt_dlp.YoutubeDL() as ytdl:
+            ytdl.dl()
             ytdl.download(url)
             return
-        try:
-            y = YouTube(url)
-            self.pop = Popup(title="Download", content=Label(f"{y.title}\nPosted By:\n{y.author}"))
-            self.pop.open()
-        except:
-            Logger.error("Not a valid YouTube link")
-        if format == "V":
-            self.get_video(url)
-            return True
-        if format == "A":
-            self.get_audio(url)
-            return True
-        if format in (None, ""):
-            Logger.warning("Input shouldn't be empty")
-            return False
+        # try:
+        #     y = YouTube(url)
+        #     self.pop = Popup(title="Download", content=Label(f"{y.title}\nPosted By:\n{y.author}"))
+        #     self.pop.open()
+        # except:
+        #     Logger.error("Not a valid YouTube link")
+        # if format == "V":
+        #     self.get_video(url)
+        #     return True
+        # if format == "A":
+        #     self.get_audio(url)
+        #     return True
+        # if format in (None, ""):
+        #     Logger.warning("Input shouldn't be empty")
+        #     return False
 
     def get_audio(self, link):
         try:
@@ -149,13 +158,13 @@ class Download_Screen(Screen):
 class Page_Master(ScreenManager):
     def __init__(self, **kwargs):
         super(Page_Master, self).__init__(**kwargs)
-        self.transition=ShaderTransition()
+        self.transition = ShaderTransition()
         self.add_widget(Front_Screen(name='front_screen'))
         self.add_widget(Search_Screen(name='search_screen'))
         self.add_widget(Download_Screen(name='download_screen'))
 
     def to_home(self):
-        self.current='front_screen'
+        self.current = 'front_screen'
 
 
 class Fa_Window(RelativeLayout):
@@ -181,11 +190,18 @@ class FaApp(App):
                     Logger.info("Got Permissions")
                 else:
                     Logger.info("Did not accept permissions")
+
             request_permissions([Permission.WRITE_EXTERNAL_STORAGE], callback)
-            fname = os.path.join(primary_external_storage_path(), "Downloads")
+            DOWNLOADS = f"{app_storage_path}/DOWNLOADS"
+            DL2 = f"{primary_external_storage_path}/DL2"
+            DL3 = f"{secondary_external_storage_path}/DL3"
+            print(f"\n\n\n\n{DOWNLOADS}\n{DL2}\n{DL3}\n\n")
             if not os.path.exists(DOWNLOADS):
                 os.mkdir(f"./{DOWNLOADS}")
-                os.mkdir(f"{fname}")
+            if not os.path.exists(DL2):
+                os.mkdir(f"./{DL2}")
+            if not os.path.exists(DL3):
+                os.mkdir(f"./{DL3}")
                 Logger.info("Permissions accepted")
 
 
