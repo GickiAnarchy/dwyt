@@ -2,8 +2,9 @@
 
 import os
 
-''' PyTube '''
-from pytube import YouTube
+''' YouTube '''
+from pytube import YouTube, Search
+import yt_dlp
 
 ''' Kivy '''
 #   App
@@ -59,6 +60,26 @@ class Front_Screen(Screen):
 
 class Search_Screen(Screen):
     pass
+    def on_enter(self, *args):
+        super(Search_Screen, self).on_enter(*args)
+        # TODO:
+        # self.pop = Popup(title = "Search YT", content = )
+
+
+class Search_Item(BoxLayout):
+    title = StringProperty(None)
+    author = StringProperty(None)
+    url = StringProperty(None)
+
+    def update(self, yt: YouTube):
+        self.yt = yt
+        self.title = self.yt.title
+        self.author = self.yt.author
+        self.url = self.yt.watch_url
+
+
+class Search_List(Screen):
+    data = ListProperty(None)
 
 
 class Download_Screen(Screen):
@@ -70,6 +91,9 @@ class Download_Screen(Screen):
 
     def download(self,format = ""):
         url = self.dl_input.text
+        with yt_dlp.YoutubeDL() as ytdl:
+            ytdl.download(url)
+            return
         try:
             y = YouTube(url)
             self.pop = Popup(title="Download", content=Label(f"{y.title}\nPosted By:\n{y.author}"))
@@ -136,6 +160,7 @@ class Page_Master(ScreenManager):
 
 class Fa_Window(RelativeLayout):
     pass
+
 
 class FaApp(App):
     win = ObjectProperty(None)
