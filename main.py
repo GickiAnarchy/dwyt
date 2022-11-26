@@ -175,14 +175,17 @@ class FaApp(App):
         self.size = self.win.size
         if platform == 'android':
             from android.permissions import request_permissions, Permission
+            from android.storage import app_storage_path, primary_external_storage_path, secondary_external_storage_path
             def callback(permission, results):
                 if all([res for res in results]):
                     Logger.info("Got Permissions")
                 else:
                     Logger.info("Did not accept permissions")
             request_permissions([Permission.WRITE_EXTERNAL_STORAGE], callback)
+            fname = os.path.join(primary_external_storage_path(), "Downloads")
             if not os.path.exists(DOWNLOADS):
                 os.mkdir(f"./{DOWNLOADS}")
+                os.mkdir(f"{fname}")
                 Logger.info("Permissions accepted")
 
 
