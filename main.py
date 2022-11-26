@@ -135,13 +135,7 @@ class Page_Master(ScreenManager):
 
 
 class Fa_Window(RelativeLayout):
-    pmaster=ObjectProperty(None)
-
-
-    # def __init__(self, **kwargs):
-    #     super(Fa_Window, self).__init__(**kwargs)
-    #     self.size_hint=(None,None)
-
+    pass
 
 class FaApp(App):
     win = ObjectProperty(None)

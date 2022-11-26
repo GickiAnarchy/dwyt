@@ -1,5 +1,5 @@
 <FaButton@Button>:
-    font_size:10
+    #font_size:10
     size_hint: 0.20, 0.20
 
 <Front_Screen>:
@@ -23,15 +23,22 @@
 
 <Search_Screen>:
     BoxLayout:
-        orientation:'vertical'
+        orientation:'horizontal'
+        padding:10,10
+        spacing:10
+        size_hint:0.8, 0.20
+        pos_hint:{'center_x':0.5, 'center_y':1.0}
         TextInput:
             id:search_in
+            size_hint:None,None
+            size:400,30
         FaButton:
             id:search_btn
             text:"Search"
             on_press:info.add_data()
 
 <Download_Screen>:
+
     BoxLayout:
         orientation:"vertical"
         Label:
@@ -63,7 +70,7 @@
 <Fa_Window>:
     canvas.before:
         Color:
-            rgb: (0.3,0,0.2)
+            rgb: (0.35,0,0.15)
         Rectangle:
             size:self.size
             pos:self.pos
@@ -76,7 +83,7 @@
         pos_hint:{'x':0.5,'y':0.75}
         FaButton:
             text:"Home"
-            size_hint:0.2,0.9
+            size_hint:0.3,0.5
             on_press:pmaster.to_home()
     AnchorLayout:
         anchor_y:'bottom'
@@ -88,8 +95,3 @@
                 padding: 10,10
                 #size_hint:0.9,0.75
                 pos_hint:{'x':0.05}
-
-#<FaApp>:
-#    win:win
-#    size_hint:None,None
-#    size:win.size
