@@ -1,3 +1,4 @@
+
 """ Down With YouTube :: Main.py || email: fatheranarchy@programmer.net """
 
 import os
@@ -63,19 +64,33 @@ class Search_Screen(Screen):
 
 
 class Search_Item(BoxLayout):
-    title = StringProperty(None)
-    author = StringProperty(None)
-    url = StringProperty(None)
-
-    def update(self, yt: YouTube):
-        self.yt = yt
-        self.title = self.yt.title
-        self.author = self.yt.author
-        self.url = self.yt.watch_url
+    title = StringProperty()
+    author = StringProperty()
+    url = StringProperty()
 
 
-class Search_List(Screen):
-    data = ListProperty(None)
+    def download(self):
+        with yt_dlp.YoutubeDL() as ytdl:
+            ytdl.download(self.url)
+            return
+
+
+class Search_Results(RecycleView):
+    data = ListProperty([])
+
+    def update_data(self, inp):
+        Logger.info(f"update_data called. {inp}")
+        if inp in (None,""):
+            return False
+        try:
+            sch = Search(inp)
+        except:
+            Logger.error("Error in search input")
+            return False
+        new_data = sch.results
+        sch.get_next_results()
+        self.data = [{"title":x.title, "author":x.author, "url":x.watch_url} for x in new_data]
+        self.refresh_from_data()
 
 
 class Download_Screen(Screen):
@@ -179,14 +194,11 @@ class FaApp(App):
                     Logger.info("Did not accept permissions")
 
             request_permissions([Permission.WRITE_EXTERNAL_STORAGE], callback)
-            DOWNLOADS = f"{app_storage_path}/DOWNLOADS"
-            DL2 = f"{primary_external_storage_path}/DL2"
+            DOWNLOADS = f"{primary_external_storage_path}/DL2"
             DL3 = f"{secondary_external_storage_path}/DL3"
-            print(f"\n\n\n\n{DOWNLOADS}\n{DL2}\n{DL3}\n\n")
+            print(f"\n\n\n\n{DOWNLOADS}\nDL2\n{DL3}\n\n")
             if not os.path.exists(DOWNLOADS):
                 os.mkdir(f"./{DOWNLOADS}")
-            if not os.path.exists(DL2):
-                os.mkdir(f"./{DL2}")
             if not os.path.exists(DL3):
                 os.mkdir(f"./{DL3}")
                 Logger.info("Permissions accepted")

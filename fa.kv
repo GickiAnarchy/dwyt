@@ -35,7 +35,44 @@
         FaButton:
             id:search_btn
             text:"Search"
-            on_press:info.add_data()
+            on_press:sch_res.update_data(search_in.text)
+    Search_Results:
+        id:sch_res
+        size_hint:1.0, 0.80
+
+<Search_Results>:
+    viewclass:"Search_Item"
+    data:self.data
+    scroll_type:['bars', 'content']
+    orientation:"vertical"
+    padding: 10,10
+    RecycleBoxLayout:
+        cols:1
+        halign:'center'
+        default_size_hint:1.0, None
+        size_hint: 1.0,0.2
+        size_hint_y: None
+        height:self.minimum_height
+        orientation:'vertical'
+
+<Search_Item>:
+    orientation:'horizontal'
+    BoxLayout:
+        orientation:'vertical'
+        size_hint:0.8,None
+        Label:
+            id:l_title
+            font_size:12
+            text:root.title
+        Label:
+            id:l_author
+            font_size:12
+            text:root.author
+    Button:
+        size_hint:0.15, 0.6
+        pos_hint:{'center_y':0.8}
+        text:"Download\nVideo"
+        on_release:root.download()
 
 <Download_Screen>:
     BoxLayout:
