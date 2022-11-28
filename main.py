@@ -193,7 +193,7 @@ class FaApp(App):
                 else:
                     Logger.info("Did not accept permissions")
 
-            request_permissions([Permission.WRITE_EXTERNAL_STORAGE, Permission.READ_EXTERNAL_STORAGE, Permission.INTERNET], callback)
+            request_permissions([Permission.WRITE_EXTERNAL_STORAGE, Permission.READ_EXTERNAL_STORAGE], callback)
             DOWNLOADS = f"{primary_external_storage_path}/DL2"
             print(f"\n\n\n\n{DOWNLOADS}\nDL2\nDL3\n\n")
             if not os.path.exists(DOWNLOADS):
