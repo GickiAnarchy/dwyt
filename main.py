@@ -50,6 +50,9 @@ window = EventLoop.window
 # Download dir??
 DOWNLOADS = "Downloads/"
 
+#Log File
+logfile = f"{os.path.dirname(__file__)}/log.fa"
+
 
 class Front_Screen(Screen):
 
@@ -186,15 +189,26 @@ class FaApp(App):
             from android.storage import app_storage_path, primary_external_storage_path, secondary_external_storage_path
             def callback(permission, results):
                 if all([res for res in results]):
-                    Logger.info("Got Permissions")
+                    log("Permissions Accepted")
+                    try:
+                        log(f"{app_storage_path}\n{primary_external_storage_path}\n{secondary_external_storage_path}\n")
+                    except Exception as e:
+                        log(str(e))
                 else:
-                    Logger.info("Did not accept permissions")
+                    log("Did not accept permissions")
             request_permissions([Permission.WRITE_EXTERNAL_STORAGE, Permission.READ_EXTERNAL_STORAGE], callback)
-            DOWNLOADS = f"{primary_external_storage_path}/DL2"
-            print(f"\n\n\n\n{DOWNLOADS}\nDL2\nDL3\n\n")
+            print(f"\n\n\n\n{DOWNLOADS}\n\n\n\n")
             if not os.path.exists(DOWNLOADS):
                 os.mkdir(f"{DOWNLOADS}")
                 Logger.info("Permissions accepted")
+
+#FILE FUNCTIONS
+def log(msg):
+    Logger.info(msg)
+    with open(logfile, "a") as lfile:
+        lfile.write(msg)
+        lfile.close()
+
 
 
 '''     END OF FILE     '''
