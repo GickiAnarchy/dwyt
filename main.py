@@ -52,7 +52,8 @@ DOWNLOADS = "Downloads/"
 
 
 class Front_Screen(Screen):
-    def do_popup(self):
+
+    def do_about(self):
         self.popup = Popup(title="ABOUT",
                            content=Label(text="Made by:\nGickiAnarchy\nEmail:fatheranarchy@programmer.net"),
                            size_hint=(0.6, 0.6))
@@ -67,7 +68,6 @@ class Search_Item(BoxLayout):
     title = StringProperty()
     author = StringProperty()
     url = StringProperty()
-
 
     def download(self):
         with yt_dlp.YoutubeDL() as ytdl:
@@ -89,7 +89,7 @@ class Search_Results(RecycleView):
             return False
         new_data = sch.results
         sch.get_next_results()
-        self.data = [{"title":x.title, "author":x.author, "url":x.watch_url} for x in new_data]
+        self.data = [{"title": x.title, "author": x.author, "url": x.watch_url} for x in new_data]
         self.refresh_from_data()
 
 
@@ -102,12 +102,9 @@ class Download_Screen(Screen):
 
     def download(self, format=""):
         url = self.dl_input.text
-        with yt_dlp.YoutubeDL() as ytdl:
-            ytdl.download(url)
-            return
         try:
             y = YouTube(url)
-            self.pop = Popup(title="Download", content=Label(f"{y.title}\nPosted By:\n{y.author}"))
+            self.pop = Popup(title="Download", content=Label(text=f"{y.title}\nPosted By:\n{y.author}"))
             self.pop.open()
         except:
             Logger.error("Not a valid YouTube link")
@@ -192,7 +189,6 @@ class FaApp(App):
                     Logger.info("Got Permissions")
                 else:
                     Logger.info("Did not accept permissions")
-
             request_permissions([Permission.WRITE_EXTERNAL_STORAGE, Permission.READ_EXTERNAL_STORAGE], callback)
             DOWNLOADS = f"{primary_external_storage_path}/DL2"
             print(f"\n\n\n\n{DOWNLOADS}\nDL2\nDL3\n\n")
