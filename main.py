@@ -217,11 +217,11 @@ class FaApp(App):
             request_permissions([Permission.WRITE_EXTERNAL_STORAGE, Permission.READ_EXTERNAL_STORAGE], callback)
 
             global DOWNLOADS, app_storage, internal_storage, sd_storage, logfile
-            logfile = f"{internal_storage}/log.fa"
             app_storage = app_storage_path()
             internal_storage = primary_external_storage_path()
             sd_storage = secondary_external_storage_path()
             DOWNLOADS = f"{internal_storage}/Downloads"
+            logfile = f"{internal_storage}/log.fa"
             log(f"{DOWNLOADS}")
             log(f"{internal_storage:*^60}")
 
