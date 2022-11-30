@@ -1,12 +1,11 @@
-
 """ Down With YouTube :: Main.py || email: fatheranarchy@programmer.net """
 
-# Imports #
+# Imports
 import os
 
 #SSL
 import ssl
-ssl._create_default_https_context = ssl._create_unverified_context
+ssl._create_default_https_context = ssl._create_unverified_context          #For SSL Certificate
 
 #Certifi
 import certifi
@@ -51,25 +50,53 @@ from kivy.config import Config
 #   Kivy Utils
 from kivy.utils import platform
 
-
 # Misc Settings
 Config.set("graphics", "resizable", True)
 EventLoop.ensure_window()
 window = EventLoop.window
-os.environ["SSL_CERT_FILE"] = certifi.where()
-
+os.environ["SSL_CERT_FILE"] = certifi.where()           #For SSL Certificate
 
 # Directories and Files
 DOWNLOADS = f"{os.path.dirname(__file__)}/Downloads/"
 app_storage = None
 internal_storage = None
 sd_storage = None
-
 logfile = "./log.fa"
 
+# Android runtime Permissions and imports   - Changes Download folder and other directories if applicable.
+if platform == 'android':
+    try:
+        from android.permissions import request_permissions, Permission
+        from android.storage import app_storage_path, primary_external_storage_path, secondary_external_storage_path
+    except ImportError as e:
+        Logger.exception(f"|||ERROR|||\n{e.msg}")
 
+    def callback(permission, results):
+        if all([res for res in results]):
+            Logger.info("Permissions Accepted")
+        else:
+            Logger.warn("Did not accept permissions")
+
+    request_permissions([Permission.WRITE_EXTERNAL_STORAGE, Permission.READ_EXTERNAL_STORAGE], callback)
+
+    global DOWNLOADS, app_storage, internal_storage, sd_storage, logfile
+    app_storage = app_storage_path()
+    internal_storage = primary_external_storage_path()
+    sd_storage = secondary_external_storage_path()
+    DOWNLOADS = f"{internal_storage}/Downloads"
+    logfile = f"{internal_storage}/log.fa"
+    Logger.info(f"{DOWNLOADS}")
+    Logger.info(f"{internal_storage:*^60}")
+
+if not os.path.exists(DOWNLOADS):
+    os.mkdir(f"{DOWNLOADS}")
+    os.mkdir(f"{DOWNLOADS}/Audio")
+    os.mkdir(f"{DOWNLOADS}/Video")
+    Logger.info("Permissions accepted")
+
+
+''' Start of kivy '''
 class Front_Screen(Screen):
-
     def do_about(self):
         self.popup = Popup(title="ABOUT",
                            content=Label(text="Made by:\nGickiAnarchy\nEmail:fatheranarchy@programmer.net"),
@@ -198,38 +225,6 @@ class FaApp(App):
         super(FaApp, self).on_start()
         self.win = window
         self.size = self.win.size
-        if platform == 'android':
-            try:
-                from android.permissions import request_permissions, Permission
-                from android.storage import app_storage_path, primary_external_storage_path, secondary_external_storage_path
-            except ImportError as e:
-                log(f"|||ERROR|||\n{e.msg}")
-
-            def callback(permission, results):
-                if all([res for res in results]):
-                    log("Permissions Accepted")
-                    try:
-                        log(f"{app_storage_path}\n{primary_external_storage_path}\n{secondary_external_storage_path}\n")
-                    except Exception as e:
-                        log(str(e))
-                else:
-                    log("Did not accept permissions")
-            request_permissions([Permission.WRITE_EXTERNAL_STORAGE, Permission.READ_EXTERNAL_STORAGE], callback)
-
-            global DOWNLOADS, app_storage, internal_storage, sd_storage, logfile
-            app_storage = app_storage_path()
-            internal_storage = primary_external_storage_path()
-            sd_storage = secondary_external_storage_path()
-            DOWNLOADS = f"{internal_storage}/Downloads"
-            logfile = f"{internal_storage}/log.fa"
-            log(f"{DOWNLOADS}")
-            log(f"{internal_storage:*^60}")
-
-        if not os.path.exists(DOWNLOADS):
-            os.mkdir(f"{DOWNLOADS}")
-            os.mkdir(f"{DOWNLOADS}/Audio")
-            os.mkdir(f"{DOWNLOADS}/Video")
-            Logger.info("Permissions accepted")
 
 
 #FILE FUNCTIONS
