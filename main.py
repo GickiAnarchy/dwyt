@@ -65,7 +65,7 @@ app_storage = None
 internal_storage = None
 sd_storage = None
 
-logfile = f"{os.path.dirname(__file__)}/log.fa"
+logfile = "./log.fa"
 
 
 class Front_Screen(Screen):
@@ -216,7 +216,8 @@ class FaApp(App):
                     log("Did not accept permissions")
             request_permissions([Permission.WRITE_EXTERNAL_STORAGE, Permission.READ_EXTERNAL_STORAGE], callback)
 
-            global DOWNLOADS, app_storage, internal_storage, sd_storage
+            global DOWNLOADS, app_storage, internal_storage, sd_storage, logfile
+            logfile = f"{internal_storage}/log.fa"
             app_storage = app_storage_path()
             internal_storage = primary_external_storage_path()
             sd_storage = secondary_external_storage_path()
@@ -234,7 +235,7 @@ class FaApp(App):
 #FILE FUNCTIONS
 def log(msg):
     Logger.info(msg)
-    with open(logfile, "a") as lfile:
+    with os.open(logfile, "a") as lfile:
         lfile.write(msg)
         lfile.close()
 
