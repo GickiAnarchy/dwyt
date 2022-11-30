@@ -3,6 +3,9 @@
 
 import os
 
+#Certifi
+import certifi
+
 ''' YouTube '''
 from pytube import YouTube, Search
 import yt_dlp
@@ -46,6 +49,8 @@ from kivy.utils import platform
 Config.set("graphics", "resizable", True)
 EventLoop.ensure_window()
 window = EventLoop.window
+
+os.environ["SSL_CERT_FILE"] = certifi.where()
 
 # Download dir??
 DOWNLOADS = "Downloads/"
