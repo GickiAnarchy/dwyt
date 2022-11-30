@@ -235,7 +235,7 @@ class FaApp(App):
 #FILE FUNCTIONS
 def log(msg):
     Logger.info(msg)
-    with os.open(logfile, "a") as lfile:
+    with open(logfile, "a") as lfile:
         lfile.write(msg)
         lfile.close()
 
