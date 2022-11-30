@@ -1,6 +1,7 @@
 
 """ Down With YouTube :: Main.py || email: fatheranarchy@programmer.net """
 
+# Imports #
 import os
 
 #SSL
@@ -50,16 +51,20 @@ from kivy.config import Config
 #   Kivy Utils
 from kivy.utils import platform
 
+
+# Misc Settings
 Config.set("graphics", "resizable", True)
 EventLoop.ensure_window()
 window = EventLoop.window
-
 os.environ["SSL_CERT_FILE"] = certifi.where()
 
-# Download dir??
-DOWNLOADS = "Downloads/"
 
-#Log File
+# Directories and Files
+DOWNLOADS = f"{os.path.dirname(__file__)}/Downloads/"
+app_storage = None
+internal_storage = None
+sd_storage = None
+
 logfile = f"{os.path.dirname(__file__)}/log.fa"
 
 
@@ -194,8 +199,12 @@ class FaApp(App):
         self.win = window
         self.size = self.win.size
         if platform == 'android':
-            from android.permissions import request_permissions, Permission
-            from android.storage import app_storage_path, primary_external_storage_path, secondary_external_storage_path
+            try:
+                from android.permissions import request_permissions, Permission
+                from android.storage import app_storage_path, primary_external_storage_path, secondary_external_storage_path
+            except ImportError as e:
+                log(f"|||ERROR|||\n{e.msg}")
+
             def callback(permission, results):
                 if all([res for res in results]):
                     log("Permissions Accepted")
@@ -206,10 +215,21 @@ class FaApp(App):
                 else:
                     log("Did not accept permissions")
             request_permissions([Permission.WRITE_EXTERNAL_STORAGE, Permission.READ_EXTERNAL_STORAGE], callback)
-            print(f"\n\n\n\n{DOWNLOADS}\n\n\n\n")
-            if not os.path.exists(DOWNLOADS):
-                os.mkdir(f"{DOWNLOADS}")
-                Logger.info("Permissions accepted")
+
+            global DOWNLOADS, app_storage, internal_storage, sd_storage
+            app_storage = app_storage_path()
+            internal_storage = primary_external_storage_path()
+            sd_storage = secondary_external_storage_path()
+            DOWNLOADS = f"{internal_storage}/Downloads"
+            log(f"{DOWNLOADS}")
+            log(f"{internal_storage:*^60}")
+
+        if not os.path.exists(DOWNLOADS):
+            os.mkdir(f"{DOWNLOADS}")
+            os.mkdir(f"{DOWNLOADS}/Audio")
+            os.mkdir(f"{DOWNLOADS}/Video")
+            Logger.info("Permissions accepted")
+
 
 #FILE FUNCTIONS
 def log(msg):
@@ -217,7 +237,6 @@ def log(msg):
     with open(logfile, "a") as lfile:
         lfile.write(msg)
         lfile.close()
-
 
 
 '''     END OF FILE     '''
