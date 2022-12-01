@@ -1,1 +1,0 @@
-/home/magick/Repos/dwyt/buildozer.spec
