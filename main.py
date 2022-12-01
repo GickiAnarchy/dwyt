@@ -2,6 +2,7 @@
 
 # Imports
 import os
+import random
 
 #SSL
 import ssl
@@ -79,7 +80,7 @@ if platform == 'android':
 
     request_permissions([Permission.WRITE_EXTERNAL_STORAGE, Permission.READ_EXTERNAL_STORAGE], callback)
 
-    global DOWNLOADS, app_storage, internal_storage, sd_storage, logfile
+
     app_storage = app_storage_path()
     internal_storage = primary_external_storage_path()
     sd_storage = secondary_external_storage_path()
@@ -118,6 +119,9 @@ class Search_Item(BoxLayout):
             ytdl.download(self.url)
             return
 
+    def random_color(self):
+        return random.random(),random.random(),random.random(),1
+
 
 class Search_Results(RecycleView):
     data = ListProperty([])
@@ -132,7 +136,6 @@ class Search_Results(RecycleView):
             Logger.error("Error in search input")
             return False
         new_data = sch.results
-        sch.get_next_results()
         self.data = [{"title": x.title, "author": x.author, "url": x.watch_url} for x in new_data]
         self.refresh_from_data()
 

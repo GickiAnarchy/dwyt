@@ -62,17 +62,23 @@
         size_hint:0.8,None
         Label:
             id:l_title
-            font_size:12
+            color:dl_button.background_color
+            font_size:'15sp'
             text:root.title
         Label:
             id:l_author
-            font_size:12
+            color:dl_button.background_color
+            font_size:'15sp'
             text:root.author
-    Button:
-        size_hint:0.15, 0.6
-        pos_hint:{'center_y':0.8}
-        text:"Download\nVideo"
-        on_release:root.download()
+    AnchorLayout:
+        Button:
+            id:dl_button
+            font_size:'15sp'
+            size_hint:0.15, 0.6
+            pos_hint:{'center_y':0.5, }
+            text:"Download\nVideo"
+            background_color:root.random_color()
+            on_release:root.download()
 
 <Download_Screen>:
     BoxLayout:
